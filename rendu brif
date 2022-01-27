@@ -1,0 +1,125 @@
+		Breif 3 Database: postgresql
+		
+	1- creation d'une base donneé
+	
+pressing_db=# CREATE TABLE article (id SERIAL PRIMARY KEY NOT NULL, 
+				libelle VARCHAR(50) NOT NULL,
+				 couleur VARCHAR(50) NOT NULL,
+				  prix INT NOT NULL);
+	
+postgres=# \list
+                                   List of databases
+     Name     |  Owner   | Encoding |   Collate   |    Ctype    |   Access privileges   
+--------------+----------+----------+-------------+-------------+-----------------------
+ my_db        | postgres | UTF8     | fr_FR.UTF-8 | fr_FR.UTF-8 | 
+ naissance_db | postgres | UTF8     | fr_FR.UTF-8 | fr_FR.UTF-8 | 
+ postgres     | postgres | UTF8     | fr_FR.UTF-8 | fr_FR.UTF-8 | 
+ pressing_db  | postgres | UTF8     | fr_FR.UTF-8 | fr_FR.UTF-8 | 
+ template0    | postgres | UTF8     | fr_FR.UTF-8 | fr_FR.UTF-8 | =c/postgres          +
+              |          |          |             |             | postgres=CTc/postgres
+ template1    | postgres | UTF8     | fr_FR.UTF-8 | fr_FR.UTF-8 | =c/postgres          +
+              |          |          |             |             | postgres=CTc/postgres
+
+	
+	2-creation des tables
+	
+pressing_db=# CREATE TABLE client (id SERIAL PRIMARY KEY NOT NULL, 
+				nom_et_prenom VARCHAR(50) NOT NULL,
+				 adress VARCHAR(50) NOT NULL);
+CREATE TABLE
+pressing_db=# CREATE TABLE article (id SERIAL PRIMARY KEY NOT NULL, 
+				libelle VARCHAR(50) NOT NULL, 
+				couleur VARCHAR(50) NOT NULL,
+				 prix VARCHAR NOT NULL);
+CREATE TABLE
+
+pressing_db=# CREATE TABLE ticket (id  SERIAL PRIMARY KEY NOT NULL, 
+   				id_client INT NOT NULL, 
+   				id_article INT NOT NULL,  
+   				FOREIGN KEY(id_client) REFERENCES client(id),
+   				FOREIGN KEY(id_article) REFERENCES article(id));
+CREATE TABLE
+pressing_db=# \dt
+          List of relations
+ Schema |  Name   | Type  |  Owner   
+--------+---------+-------+----------
+ public | article | table | postgres
+ public | client  | table | postgres
+ public | ticket  | table | postgres
+(3 rows)
+
+		3-importation et exportaion de donnnées sonts faite sur PgAdmin
+		
+		
+		
+		4-la jointure des 3 tables.
+pressing_db=# select client.nom_et_prenom, article.libelle, article.prix, ticket.id as numéro_du_ticket from client
+		inner join article on client.id=article.id
+		inner join ticket on client.id=ticket.id;
+	
+    nom_et_prenom     |        libelle        | prix  | numero_ticket
+----------------------+-----------------------+-------+-----
+ Brande Bruffell      | mi                    | $4.41 |   1
+ Nollie Handslip      | aliquam augue         | $1.13 |   2
+ Hannis Biggs         | leo                   | $6.47 |   3
+ Michele Dighton      | sit amet              | $2.20 |   4
+ Stanfield Trahar     | integer               | $1.00 |   5
+ Pippy Straughan      | platea                | $0.73 |   6
+ Theodora Codd        | lorem                 | $2.63 |   7
+ Arlie Wesgate        | sit amet              | $7.09 |   8
+ Dominique Clacey     | ipsum integer         | $1.53 |   9
+ Marcello Swalwell    | sagittis nam          | $3.75 |  10
+ Randi Marrill        | elementum nullam      | $6.48 |  11
+ Arnie Scrowston      | eget                  | $2.66 |  12
+ Vivi Corsor          | felis                 | $6.80 |  13
+ Talyah Couroy        | quis odio             | $5.06 |  14
+ Augustus Ivashev     | vulputate             | $0.96 |  15
+ Joanie Coveley       | pellentesque ultrices | $9.91 |  16
+ Adrienne McFetrich   | diam nam              | $4.56 |  17
+ Tessie Hamal         | gravida               | $0.63 |  18
+ Judye Darbon         | blandit               | $2.06 |  19
+ Neddy Mishow         | vestibulum eget       | $9.11 |  20
+ Baudoin Nornasell    | vel                   | $8.49 |  21
+ Ellissa Clappson     | praesent lectus       | $4.08 |  22
+ Corena Le Prevost    | at                    | $8.68 |  23
+ Claudia Olennikov    | pellentesque          | $6.12 |  24
+ Tamera Heart         | lectus                | $0.54 |  25
+ Nevile M'Chirrie     | euismod scelerisque   | $0.97 |  26
+ Zeke Gately          | lorem id              | $1.12 |  27
+ Laurent Carthy       | justo nec             | $5.87 |  28
+ Genevra Normington   | risus                 | $9.42 |  29
+ Lula Ludvigsen       | justo lacinia         | $9.56 |  30
+Georgia Colclough    | phasellus sit         | $3.45 |  31
+ Dawn MacFayden       | convallis             | $0.33 |  32
+ Judon Chelnam        | vulputate             | $2.33 |  33
+ Darnall Mosco        | quam turpis           | $9.37 |  34
+ Tobin Lipyeat        | sed                   | $8.40 |  35
+ Deborah Linnard      | at feugiat            | $6.59 |  36
+ Rosita Gundry        | ipsum aliquam         | $4.30 |  37
+ Christos Castagneto  | justo in              | $0.02 |  38
+ Jeanette Hazelden    | semper                | $8.00 |  39
+ Germaine Benzing     | quisque ut            | $4.24 |  40
+ Fanchon Divine       | primis in             | $4.20 |  41
+ Mayer Burbury        | parturient montes     | $6.90 |  42
+ Aubine Sollam        | aliquam convallis     | $8.76 |  43
+ Jordana Aldred       | mi                    | $4.32 |  44
+ Kendal Sells         | nulla                 | $8.03 |  45
+ Coleman McMorran     | arcu                  | $8.65 |  46
+ Chloe Jevon          | leo pellentesque      | $8.13 |  47
+ Karissa Yukhnov      | sed                   | $9.10 |  48
+ Megan Deyes          | nulla                 | $5.61 |  49
+ Stafani Donnelly     | natoque penatibus     | $7.50 |  50
+ Eal Torrijos         | platea                | $2.23 |  51
+ Charley Wickson      | in                    | $5.15 |  52
+ Estrellita Brewitt   | semper                | $7.77 |  53
+ Warren Stiling       | ut                    | $3.26 |  54
+ Guilbert Bearham     | habitasse platea      | $5.08 |  55
+ Jacqui Veltmann      | tellus                | $9.85 |  56
+ Katerina Brain       | justo                 | $7.30 |  57
+ Mitzi Snary          | vestibulum            | $3.99 |  58
+ Cliff Belsey         | volutpat              | $9.31 |  59
+ Terence Tchir        | lacinia eget          | $3.50 |  60
+ Merry O'Moylane      | sed lacus             | $4.20 |  61
+ Justinn Dusting      | dis                   | $8.89 |  62
+ Micheal Glencrosche  | id justo              | $1.79 |  63
+	
